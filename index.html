@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="План прохождения Пепельных земель Valheim для двоих: броня, еда, зелья, количества ресурсов, крепости и босс Фейдер.">
+<title>Пепельные земли: план на двоих</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500;700;800&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky table of contents on the left, one reading column; phases are a numbered route because order matters */
+:root{
+  --bg:#E8EDF4;          /* холодный пепел */
+  --surface:#F5F8FC;
+  --ink:#15202F;
+  --muted:#56657A;
+  --line:#CBD5E2;
+  --accent:#1F5FC4;      /* синий — главный акцент */
+  --accent-soft:#DBE6F7;
+  --flame:#0B7A9C;       /* бирюзово-синее пламя Фейдера — только в разделе босса */
+  --flame-soft:#D3EDF5;
+  --warn:#9A6A00;
+  --font-display:"Alegreya SC","Palatino Linotype",Georgia,serif;
+  --font-body:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",Consolas,monospace;
+  --radius:6px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D131C;--surface:#152030;--ink:#E5ECF5;--muted:#93A3BA;--line:#263347;
+    --accent:#5E9DFF;--accent-soft:#16284A;--flame:#4CC6E6;--flame-soft:#0F2F3C;--warn:#E0B04A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D131C;--surface:#152030;--ink:#E5ECF5;--muted:#93A3BA;--line:#263347;
+  --accent:#5E9DFF;--accent-soft:#16284A;--flame:#4CC6E6;--flame-soft:#0F2F3C;--warn:#E0B04A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55;padding-inline:16px;padding-block:0 64px}
+a{color:var(--accent)}
+a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:1.9rem;font-weight:700}
+h3{font-size:1.25rem;font-weight:700}
+p{margin:0}
+.mono,td.n,th.n{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+
+/* TOC */
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding-block:32px;max-height:100vh;overflow:auto}
+nav.toc .label{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+nav.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.toc a{display:block;padding:5px 10px;border-radius:var(--radius);color:var(--ink);text-decoration:none;font-size:.95rem}
+nav.toc a:hover{background:var(--accent-soft)}
+nav.toc a.boss{color:var(--flame);font-weight:700}
+@media (max-width:900px){
+  nav.toc{position:sticky;z-index:5;background:var(--bg);padding-block:10px;max-height:none;border-bottom:1px solid var(--line);margin-inline:-16px;padding-inline:16px}
+  nav.toc .label{display:none}
+  nav.toc ol{flex-direction:row;overflow-x:auto;gap:6px;scrollbar-width:none}
+  nav.toc a{white-space:nowrap;border:1px solid var(--line);font-size:.88rem}
+}
+
+main{min-width:0;display:flex;flex-direction:column;gap:72px;padding-block:32px}
+section{display:flex;flex-direction:column;gap:18px;scroll-margin-top:72px}
+.lede{max-width:65ch;color:var(--muted)}
+.eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+
+/* Hero */
+.hero{display:flex;flex-direction:column;gap:20px;padding-block:8px 0}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;letter-spacing:.01em}
+.hero h1 span{color:var(--accent)}
+.hero .lede{font-size:1.1rem}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--line)}
+.facts div{padding:14px 14px 14px 0;display:flex;flex-direction:column;gap:2px}
+.facts div+div{padding-left:14px;border-left:1px solid var(--line)}
+.facts b{font-family:var(--font-mono);font-size:1.6rem;font-weight:500;font-variant-numeric:tabular-nums}
+.facts small{color:var(--muted);font-size:.85rem;line-height:1.3}
+@media (max-width:640px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){padding-left:0;border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--line)}}
+
+/* Callouts */
+.note{border-left:3px solid var(--accent);background:var(--surface);padding:12px 16px;border-radius:0 var(--radius) var(--radius) 0;max-width:75ch}
+.note.green{border-color:var(--flame)}
+.note.warn{border-color:var(--warn)}
+.note b{font-weight:700}
+
+/* Route */
+.route{display:flex;flex-direction:column;gap:0;counter-reset:phase}
+.phase{display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;padding-block:22px;border-top:1px solid var(--line)}
+.phase:last-child{border-bottom:1px solid var(--line)}
+.phase .num{font-family:var(--font-display);font-size:2.4rem;line-height:1;color:var(--accent);font-weight:800}
+.phase.boss .num{color:var(--flame)}
+.phase .body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.phase .head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px}
+.progress{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.progress.done{color:var(--flame);border-color:var(--flame)}
+@media (max-width:520px){.phase{grid-template-columns:minmax(0,1fr);gap:6px}}
+
+ul.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+ul.check li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start}
+ul.check input{width:18px;height:18px;margin-top:4px;accent-color:var(--accent);cursor:pointer}
+ul.check label{cursor:pointer}
+ul.check input:checked + label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.who{display:inline-block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:2px}
+.who.a{background:var(--accent-soft);color:var(--accent)}
+.who.b{background:var(--flame-soft);color:var(--flame)}
+
+/* Tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--bg)}
+td.n,th.n{text-align:right;white-space:nowrap}
+td small{color:var(--muted)}
+tr.best td{background:var(--accent-soft)}
+.tag{display:inline-block;font-size:.75rem;padding:1px 7px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;margin:1px 2px 1px 0}
+.tag.weak{border-color:var(--accent);color:var(--accent)}
+.tag.res{color:var(--muted)}
+.tag.imm{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* Cards: only for the armour sets, which really are three parallel objects */
+.sets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.sets{grid-template-columns:minmax(0,1fr)}}
+.set{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:16px;display:flex;flex-direction:column;gap:10px}
+.set.pick{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.set .armor{font-family:var(--font-mono);font-size:1.9rem;font-variant-numeric:tabular-nums}
+.set .armor small{font-size:.85rem;color:var(--muted)}
+.set dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:.92rem}
+.set dt{color:var(--muted)}
+.set dd{margin:0}
+
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media (max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}}
+.cols > div{min-width:0;display:flex;flex-direction:column;gap:10px}
+
+/* Boss */
+#fader{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--flame);border-radius:var(--radius);padding:28px 24px}
+@media (max-width:520px){#fader{padding:20px 14px}}
+#fader h2{color:var(--flame)}
+.res-strip{display:flex;flex-wrap:wrap;gap:6px}
+.roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:720px){.roles{grid-template-columns:minmax(0,1fr)}}
+.role{border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.role ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+
+ul.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:75ch}
+footer{color:var(--muted);font-size:.9rem;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:20px}
+footer ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:inherit;font-size:.9rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:var(--radius);padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+</style>
+</head>
+<body>
+
+<div class="shell">
+<nav class="toc" aria-label="Разделы">
+  <div class="label">Маршрут</div>
+  <ol>
+    <li><a href="#route">План по фазам</a></li>
+    <li><a href="#farm">Сколько набить</a></li>
+    <li><a href="#bring">Что взять с собой</a></li>
+    <li><a href="#armor">Броня</a></li>
+    <li><a href="#food">Еда</a></li>
+    <li><a href="#meads">Зелья</a></li>
+    <li><a href="#weapons">Оружие</a></li>
+    <li><a href="#stations">Станции</a></li>
+    <li><a href="#enemies">Враги</a></li>
+    <li><a href="#fortress">Крепости</a></li>
+    <li><a href="#fader" class="boss">Фейдер</a></li>
+    <li><a href="#after">После босса</a></li>
+    <li><a href="#sources">Источники</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="hero">
+  <div class="eyebrow">Valheim · седьмой биом · после Королевы</div>
+  <h1>Пепельные земли: <span>план на двоих</span></h1>
+  <p class="lede">Пошаговый маршрут от высадки на кипящем берегу до победы над Фейдером. Собран по вики Valheim и нескольким гайдам; цифры взяты из вики. Галочки сохраняются в вашем браузере, так что каждый из вас может вести свой список.</p>
+  <div class="facts">
+    <div><b>25 000</b><small>здоровье Фейдера</small></div>
+    <div><b>9</b><small>фрагментов колокола для призыва (3 колокола)</small></div>
+    <div><b>≈280</b><small>пламенной руды на двоих (танк и маг)</small></div>
+    <div><b>20</b><small>обугленных крепостей в каждом мире</small></div>
+  </div>
+</header>
+
+<!-- ============ ROUTE ============ -->
+<section id="route">
+  <div class="eyebrow">Главное</div>
+  <h2>План прохождения по фазам</h2>
+  <p class="lede">Порядок важен: каждая фаза открывает материалы для следующей. Метки <span class="who a">танк</span> и <span class="who b">маг</span> показывают, кому из вас брать задачу. Все количества посчитаны на вас двоих; разбивку по каждому смотрите в разделе <a href="#farm">Сколько набить</a>.</p>
+  <div class="toolbar"><button type="button" id="reset">Сбросить все галочки</button><span class="mono" id="total" style="color:var(--muted);font-size:.85rem"></span></div>
+
+  <div class="route">
+    <div class="phase" data-phase>
+      <div class="num">0</div>
+      <div class="body">
+        <div class="head"><h3>Подготовка в Туманных землях</h3><span class="progress"></span></div>
+        <ul class="check">
+          <li><input type="checkbox" id="p0-1"><label for="p0-1">Построить <b>Драккар</b>: 100 железных гвоздей, 30 керамических пластин, 50 тонкой древесины, 25 иггдрасилевой древесины. Только он не разваливается в кипящей воде (обычные лодки получают до 30 урона в секунду).</label></li>
+          <li><input type="checkbox" id="p0-2"><label for="p0-2">Сварить <b>огнестойкое ячменное вино</b>: 10 ячменя + 10 морошки в котле для медовухи, 2 игровых дня в бродильне → 6 бутылок. На двоих нужно <b>≈18 бутылок</b> (бутылка действует 10 минут), то есть 3 закваски: <b>30 ячменя + 30 морошки</b>.</label></li>
+          <li><input type="checkbox" id="p0-3"><label for="p0-3">Сделать 2 <b>ядра щита</b> (чёрное ядро + ядро суртлинга + 5 керамических пластин, верстак ремесленника) для генераторов щита на базе.</label></li>
+          <li><input type="checkbox" id="p0-4"><label for="p0-4">Взять <b>Мистуокер</b> или серебряные стрелы: все обугленные уязвимы к духу (×1,5). Для Вольтюров и Костепасти пригодятся ледяные стрелы.</label></li>
+          <li><input type="checkbox" id="p0-5"><label for="p0-5">Запастись: по <b>10 больших лечебных медовух</b> и <b>10 медовух выносливости</b> на каждого, <b>50+ костяных осколков</b> (топливо щита), <b>120 ячменной муки</b> (пироги), еда Туманных земель на первые дни.</label></li>
+          <li><input type="checkbox" id="p0-6"><label for="p0-6">Для мага привезти из Туманных и прошлых биомов: <b>≈140 льняной нити</b>, <b>≈120 очищенного эйтра</b>, <b>≈70 сока</b> и <b>≈40 магекапов</b> (еда на эйтр), <b>4 трофея тролля</b> (Тролльстав).</label><span class="who b">маг</span></li>
+          <li><input type="checkbox" id="p0-7"><label for="p0-7">Для танка привезти <b>20 льняной нити</b> (седло Аскесвина) и <b>10 очищенного эйтра</b> (пламенный шлем).</label><span class="who a">танк</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase" data-phase>
+      <div class="num">1</div>
+      <div class="body">
+        <div class="head"><h3>Высадка и плацдарм на берегу</h3><span class="progress"></span></div>
+        <ul class="check">
+          <li><input type="checkbox" id="p1-1"><label for="p1-1">Выбрать участок у побережья: враги появляются только на суше, вдоль берега их меньше. Костепасть (светящиеся шипы в воде) бейте с берега или вытаскивайте гарпуном, не рискуя кораблём.</label></li>
+          <li><input type="checkbox" id="p1-2"><label for="p1-2">Строить из камня или <b>граустена</b>, не из дерева: пепельный дождь поджигает постройки, а огонь перекидывается между деревянными деталями.</label></li>
+          <li><input type="checkbox" id="p1-3"><label for="p1-3">Поставить <b>генератор щита</b> (5 железа, 5 меди, 1 ядро щита). Купол радиусом 30 м защищает от пепельного дождя, снарядов врагов и лавовых бомб. Топливо — костяные осколки или обугленные кости, до 10 штук.</label></li>
+          <li><input type="checkbox" id="p1-4"><label for="p1-4">Поставить портал и кровать, отметить точку на карте. Вокруг базы расставить костры или верстаки: любая постройка блокирует появление врагов в радиусе 20 м.</label></li>
+          <li><input type="checkbox" id="p1-5"><label for="p1-5">Сбить 1–2 Вольтюров стрелами (200 HP, слабы к льду) и собрать их мясо и яйца.</label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase" data-phase>
+      <div class="num">2</div>
+      <div class="body">
+        <div class="head"><h3>Первые ресурсы и Аскесвины</h3><span class="progress"></span></div>
+        <ul class="check">
+          <li><input type="checkbox" id="p2-1"><label for="p2-1">Набить <b>≈85 шкур Аскесвина</b> (танку 47, магу 34, 1 трофей на станцию) и <b>≈110 обугленных костей</b> (танку 73, магу 30, 4 на станцию). Кости падают с обугленных воинов, стрелков и твитчеров.</label></li>
+          <li><input type="checkbox" id="p2-2"><label for="p2-2">Нарубить <b>≈170 пепельного дерева</b> (танку 90, магу 30, станции и таран 44) и ещё <b>≈50 любой древесины</b> на топливо тарана. Добыть киркой <b>60 граустена</b> на два каменных портала, плюс сколько уйдёт на стены базы.</label></li>
+          <li><input type="checkbox" id="p2-3"><label for="p2-3">Собрать на 10 комплектов еды для обоих: <b>≈80 лозоягод</b>, <b>≈46 папоротников</b> (30 на еду и 16 на посох дикой природы), <b>≈40 дымных пуховок</b>. Забрать семена и посадить <b>20–30 кустов лозоягоды</b> прямо в Пепельных землях.</label></li>
+          <li><input type="checkbox" id="p2-4"><label for="p2-4">Добыть <b>≈280 пламенной руды</b> (1 руда = 1 слиток; танку 215, магу 23, станциям и тарану 24, остальное запас) киркой из чёрного металла (жилы у лавы; ещё бывает в сундуках крепостей и у Магмарыбы). Плавить в доменной печи на угле. Работайте под куполом щита: из лавы летят огненные шары.</label></li>
+          <li><input type="checkbox" id="p2-5"><label for="p2-5">Приручить <b>Аскесвина</b>: кормить папоротником, лозоягодой или пуховками. С седлом (6 пламенного металла, 20 льняной нити, 4 сухожилия Моргена) он ходит по лаве без урона, удобно добраться до жил руды.</label><span class="who a">танк</span></li>
+          <li><input type="checkbox" id="p2-6"><label for="p2-6">Зачистить <b>Гнилую дыру</b> (логово Моргенов): нужно <b>≈10 сухожилий</b> (танку 6, магу 2, резак 2) и <b>1 сердце Моргена</b> (кираса), плюс расплавленные ядра. Морген слаб к молнии (×1,5).</label></li>
+          <li><input type="checkbox" id="p2-8"><label for="p2-8">Мясо на 10 комплектов еды: <b>≈50 хвостов Аскесвина</b>, <b>10 мяса Вольтюра</b>, <b>10 яиц Вольтюра</b>. Для булавы танка ещё <b>14 серы</b> (серные арки, лавовые капли).</label></li>
+          <li><input type="checkbox" id="p2-7"><label for="p2-7">Подстрелить <b>Падшую валькирию</b> ради <b>≈20 небесных перьев</b>: 8 на венок для стола гальдра и 12 на посох дикой природы до ур. 3.</label><span class="who b">маг</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase" data-phase>
+      <div class="num">3</div>
+      <div class="body">
+        <div class="head"><h3>Каменный портал и улучшение станций</h3><span class="progress"></span></div>
+        <ul class="check">
+          <li><input type="checkbox" id="p3-1"><label for="p3-1"><b>2 каменных портала</b> (база и арена, камнерез): на оба <b>20 глаз грейдварфа, 60 граустена, 4 расплавленных ядра</b>. Через него проходят руда и металл, плавать с грузом больше не нужно.</label></li>
+          <li><input type="checkbox" id="p3-2"><label for="p3-2">Чёрная кузница, ур. 4: <b>резак по металлу</b> (5 чёрного мрамора, 5 пламенного металла, 5 пепельного дерева, 4 обугленные кости).</label></li>
+          <li><input type="checkbox" id="p3-3"><label for="p3-3">Чёрная кузница, ур. 5: <b>резак для самоцветов</b> (5 пламенного металла, 8 пепельного дерева, 2 сухожилия Моргена, 1 кровавый камень). Ур. 6 в версии 1.0 даёт фартук кузнеца.</label></li>
+          <li><input type="checkbox" id="p3-4"><label for="p3-4">Котёл, ур. 6: <b>скалки и разделочные доски</b> (8 пепельного дерева, 6 тонкой древесины, 4 пламенного металла). Без них не сварить лучшую еду.</label></li>
+          <li><input type="checkbox" id="p3-5"><label for="p3-5">Стол гальдра, ур. 4: <b>венок из перьев</b> (8 небесных перьев, 1 трофей Аскесвина, 10 очищенного эйтра, 3 пепельного дерева).</label><span class="who b">маг</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase" data-phase>
+      <div class="num">4</div>
+      <div class="body">
+        <div class="head"><h3>Броня, оружие, еда</h3><span class="progress"></span></div>
+        <ul class="check">
+          <li><input type="checkbox" id="p4-1"><label for="p4-1">Танк: пламенный сет и пепельный плащ до ур. 3. Маг: сет Эмблы и плащ Аскесвина до ур. 3. Материалы по пунктам в разделе <a href="#farm">Сколько набить</a>.</label></li>
+          <li><input type="checkbox" id="p4-2"><label for="p4-2">Танк: пламенная булава, пламенный щит, Пепельный клык и <b>100 обугленных стрел</b> (20 костей, 10 перьев, 40 пепельного дерева). Маг: посох дикой природы и Тролльстав.</label></li>
+          <li><input type="checkbox" id="p4-3"><label for="p4-3">Наготовить по <b>10 комплектов еды</b> на каждого (≈5 часов игры или бой с несколькими попытками). Состав комплектов в разделе <a href="#food">Еда</a>.</label></li>
+          <li><input type="checkbox" id="p4-4"><label for="p4-4">Построить <b>таран</b> (10 пламенного металла, 2 ядра суртлинга, 20 пепельного дерева) или <b>катапульту</b> (10 пламенного металла, 1 обугленная шестерня, 20 пепельного дерева).</label></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase" data-phase>
+      <div class="num">5</div>
+      <div class="body">
+        <div class="head"><h3>Штурм обугленных крепостей</h3><span class="progress"></span></div>
+        <ul class="check">
+          <li><input type="checkbox" id="p5-1"><label for="p5-1">Крепость №1: пробить стену тараном, зачистить, разбить алтарь колокола (2–4 фрагмента), открыть сундуки, найти Вегвизир к арене.</label></li>
+          <li><input type="checkbox" id="p5-6"><label for="p5-6">Собрать из сундуков: <b>5 кровавых камней</b> (4 на Тролльстав до ур. 3, 1 на резак) и <b>4 нефрита</b> (посох дикой природы). Иолит по желанию, для молнии в оружии.</label></li>
+          <li><input type="checkbox" id="p5-2"><label for="p5-2">Крепость №2.</label></li>
+          <li><input type="checkbox" id="p5-3"><label for="p5-3">Крепость №3 (обычно этого хватает на 9 фрагментов; если не повезло, нужна четвёртая).</label></li>
+          <li><input type="checkbox" id="p5-4"><label for="p5-4">Выковать <b>3 колокола</b> в чёрной кузнице (по 3 фрагмента на колокол).</label></li>
+          <li><input type="checkbox" id="p5-5"><label for="p5-5">Найти арену «Изумрудное пламя»: Вегвизир лежит в центральной башне крепости (шанс 50%).</label></li>
+        </ul>
+        <div class="note warn"><b>Не обязательно:</b> меч Дирнвин. Три обломка: рукоять с мини-босса <b>лорда Рето</b>, клинок с алтаря клинка, острие с алтаря острия (стену пробить киркой). Места подсказывают Вегвизиры в Гнилых дырах. Сборка: 3 обломка + 20 пламенного металла + 1 кровавый камень. Учтите, что против Фейдера огненный урон меча бесполезен.</div>
+      </div>
+    </div>
+
+    <div class="phase boss" data-phase>
+      <div class="num">6</div>
+      <div class="body">
+        <div class="head"><h3>Подготовка арены и бой с Фейдером</h3><span class="progress"></span></div>
+        <ul class="check">
+          <li><input type="checkbox" id="p6-1"><label for="p6-1">Зачистить арену от бродячих обугленных и Моргенов.</label></li>
+          <li><input type="checkbox" id="p6-2"><label for="p6-2">Обнести арену снаружи земляным валом мотыгой, чтобы чужие мобы не мешали (внутри арены строить нельзя).</label></li>
+          <li><input type="checkbox" id="p6-3"><label for="p6-3">Построить укрытие с порталом и кроватью неподалёку, плюс запасной портал подальше: бой разрушает всё вокруг.</label></li>
+          <li><input type="checkbox" id="p6-4"><label for="p6-4">Оставить у портала сундук с запасной едой, медовухами и вином, чтобы после смерти быстро вернуться.</label></li>
+          <li><input type="checkbox" id="p6-5"><label for="p6-5">Отдохнуть (бонус «Отдых»), съесть еду, выпить огнестойкое вино, активировать силу Костяной массы или Королевы.</label></li>
+          <li><input type="checkbox" id="p6-6"><label for="p6-6">Поставить 3 колокола на пьедесталы и активировать центральный алтарь. Тактика: <a href="#fader">раздел Фейдера</a>.</label></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FARM ============ -->
+<section id="farm">
+  <div class="eyebrow">Количества</div>
+  <h2>Сколько чего набить</h2>
+  <p class="lede">Расчёт под вашу пару: танк в пламенном сете с булавой и щитом, маг в сете Эмблы с двумя посохами. Всё снаряжение улучшено до ур. 3: на это хватает чёрной кузницы ур. 5 и стола гальдра ур. 4. В колонке «Набить» итог округлён вверх с небольшим запасом.</p>
+
+  <h3>Итого на двоих</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Ресурс</th><th class="n">Танк</th><th class="n">Маг</th><th class="n">Общее</th><th class="n">Набить</th><th>Где брать</th></tr></thead>
+    <tbody>
+      <tr class="best"><td><b>Пламенная руда</b></td><td class="n">215</td><td class="n">23</td><td class="n">24</td><td class="n"><b>≈280</b></td><td>Жилы у лавы (кирка из чёрного металла), сундуки крепостей, Магмарыба</td></tr>
+      <tr class="best"><td><b>Шкура Аскесвина</b></td><td class="n">47</td><td class="n">34</td><td class="n">—</td><td class="n"><b>≈85</b></td><td>Аскесвины в глубине биома</td></tr>
+      <tr class="best"><td><b>Обугленная кость</b></td><td class="n">73</td><td class="n">30</td><td class="n">4</td><td class="n"><b>≈110</b></td><td>Обугленные воины, стрелки, твитчеры</td></tr>
+      <tr class="best"><td><b>Пепельное дерево</b></td><td class="n">90</td><td class="n">30</td><td class="n">44</td><td class="n"><b>≈170</b></td><td>Обгоревшие деревья и брёвна</td></tr>
+      <tr><td>Льняная нить</td><td class="n">20</td><td class="n">140</td><td class="n">—</td><td class="n">160</td><td>Лён с Равнин, прялка</td></tr>
+      <tr><td>Очищенный эйтр</td><td class="n">10</td><td class="n">100</td><td class="n">10</td><td class="n">120</td><td>Очиститель эйтра (Туманные земли)</td></tr>
+      <tr><td>Граустен</td><td class="n">—</td><td class="n">—</td><td class="n">60</td><td class="n">60+</td><td>Камни и руины Пепельных земель; плюс на стены базы</td></tr>
+      <tr><td>Небесное перо</td><td class="n">—</td><td class="n">12</td><td class="n">8</td><td class="n">20</td><td>Падшая валькирия</td></tr>
+      <tr><td>Сера</td><td class="n">14</td><td class="n">—</td><td class="n">—</td><td class="n">14</td><td>Серные арки, лавовые капли</td></tr>
+      <tr><td>Сухожилие Моргена</td><td class="n">6</td><td class="n">2</td><td class="n">2</td><td class="n">10</td><td>Моргены (Гнилые дыры)</td></tr>
+      <tr><td>Глаз грейдварфа</td><td class="n">—</td><td class="n">—</td><td class="n">20</td><td class="n">20</td><td>Грейдварфы (Луга, Чёрный лес)</td></tr>
+      <tr><td>Кровавый камень</td><td class="n">—</td><td class="n">4</td><td class="n">1</td><td class="n">5</td><td>Сундуки обугленных крепостей</td></tr>
+      <tr><td>Нефрит</td><td class="n">—</td><td class="n">4</td><td class="n">—</td><td class="n">4</td><td>Сундуки обугленных крепостей</td></tr>
+      <tr><td>Трофей тролля</td><td class="n">—</td><td class="n">4</td><td class="n">—</td><td class="n">4</td><td>Тролли (Чёрный лес)</td></tr>
+      <tr><td>Расплавленное ядро</td><td class="n">—</td><td class="n">—</td><td class="n">4</td><td class="n">4</td><td>Крепости, Гнилые дыры</td></tr>
+      <tr><td>Ядро суртлинга</td><td class="n">—</td><td class="n">—</td><td class="n">4</td><td class="n">4</td><td>2 на таран, 2 на ядра щита</td></tr>
+      <tr><td>Зуб Костепасти</td><td class="n">5</td><td class="n">—</td><td class="n">—</td><td class="n">5</td><td>Костепасть в кипящем море</td></tr>
+      <tr><td>Перья (обычные)</td><td class="n">10</td><td class="n">—</td><td class="n">—</td><td class="n">10</td><td>Вольтюры и другие птицы</td></tr>
+      <tr><td>Сердце Моргена</td><td class="n">1</td><td class="n">—</td><td class="n">—</td><td class="n">1</td><td>Морген</td></tr>
+      <tr><td>Трофей Аскесвина</td><td class="n">—</td><td class="n">—</td><td class="n">1</td><td class="n">1</td><td>Аскесвин</td></tr>
+      <tr><td>Чёрный мрамор / тонкая древесина</td><td class="n">—</td><td class="n">—</td><td class="n">5 / 6</td><td class="n">5 / 6</td><td>Туманные земли / берёзы и дубы</td></tr>
+      <tr><td>Фрагмент колокола</td><td class="n">—</td><td class="n">—</td><td class="n">9</td><td class="n">9</td><td>Алтари в 3–5 крепостях (по 2–4 с алтаря)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="cols">
+    <div>
+      <h3><span class="who a">танк</span> снаряжение до ур. 3</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Предмет</th><th>Материалы за ур. 1–3</th></tr></thead>
+        <tbody>
+          <tr><td>Пламенный шлем</td><td>40 пл. металла, 6 шкур, 2 кости, 10 эйтра</td></tr>
+          <tr><td>Пламенная кираса</td><td>50 пл. металла, 6 шкур, 5 костей, 1 сердце Моргена</td></tr>
+          <tr><td>Пламенные поножи</td><td>50 пл. металла, 6 шкур, 5 костей</td></tr>
+          <tr><td>Пламенная булава</td><td>39 пл. металла, 25 костей, 14 серы, 9 шкур</td></tr>
+          <tr><td>Пламенный щит</td><td>20 пл. металла, 40 пепельного дерева, 8 шкур</td></tr>
+          <tr><td>Пепельный плащ</td><td>5 пл. металла, 12 шкур, 2 сухожилия</td></tr>
+          <tr><td>Пепельный клык (только ур. 1)</td><td>5 пл. металла, 16 костей, 10 пепельного дерева, 5 зубов Костепасти</td></tr>
+          <tr><td>100 обугленных стрел</td><td>20 костей, 10 перьев, 40 пепельного дерева</td></tr>
+          <tr><td>Седло Аскесвина</td><td>6 пл. металла, 20 льняной нити, 4 сухожилия</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div>
+      <h3><span class="who b">маг</span> снаряжение до ур. 3</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Предмет</th><th>Материалы за ур. 1–3</th></tr></thead>
+        <tbody>
+          <tr><td>Капюшон Эмблы</td><td>40 льняной нити, 30 эйтра, 2 шкуры</td></tr>
+          <tr><td>Мантия Эмблы</td><td>50 нити, 35 эйтра, 10 шкур, 11 пл. металла</td></tr>
+          <tr><td>Штаны Эмблы</td><td>50 нити, 35 эйтра, 10 шкур</td></tr>
+          <tr><td>Плащ Аскесвина</td><td>12 шкур, 2 сухожилия</td></tr>
+          <tr><td>Посох дикой природы</td><td>30 пепельного дерева, 16 папоротников, 12 небесных перьев, 4 нефрита</td></tr>
+          <tr><td>Тролльстав</td><td>30 костей, 4 трофея тролля, 12 пл. металла, 4 кровавых камня</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note"><b>Если не хватает самоцветов:</b> Тролльстав ур. 2 обходится в 20 костей, 2 трофея тролля, 6 пл. металла и 2 кровавых камня.</div>
+    </div>
+  </div>
+
+  <h3>Общее: станции и постройки</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Постройка</th><th>Материалы</th></tr></thead>
+    <tbody>
+      <tr><td>Резак по металлу (кузница 4)</td><td>5 чёрного мрамора, 5 пл. металла, 5 пепельного дерева, 4 кости</td></tr>
+      <tr><td>Резак для самоцветов (кузница 5)</td><td>5 пл. металла, 8 пепельного дерева, 2 сухожилия, 1 кровавый камень</td></tr>
+      <tr><td>Скалки и доски (котёл 6)</td><td>4 пл. металла, 8 пепельного дерева, 6 тонкой древесины</td></tr>
+      <tr><td>Венок из перьев (стол гальдра 4)</td><td>8 небесных перьев, 1 трофей Аскесвина, 10 эйтра, 3 пепельного дерева</td></tr>
+      <tr><td>Таран</td><td>10 пл. металла, 2 ядра суртлинга, 20 пепельного дерева; топливо ≈50 любой древесины</td></tr>
+      <tr><td>2 каменных портала</td><td>20 глаз грейдварфа, 60 граустена, 4 расплавленных ядра</td></tr>
+      <tr><td>2 генератора щита</td><td>10 железа, 10 меди, 2 ядра щита (2 чёрных ядра, 2 ядра суртлинга, 10 керамических пластин)</td></tr>
+      <tr><td>3 колокола</td><td>9 фрагментов колокола</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Еда и зелья: 10 комплектов на каждого</h3>
+  <p class="lede">Одного комплекта хватает на 25–30 минут. 10 комплектов покрывают несколько вечеров фарма или бой с Фейдером с парой смертей.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Что приготовить</th><th class="n">Штук</th><th>Ингредиенты на всё</th></tr></thead>
+    <tbody>
+      <tr><td>Пикантный пирог (оба)</td><td class="n">20</td><td>40 хвостов Аскесвина, 40 лозоягод, 80 ячменной муки</td></tr>
+      <tr><td>Мясное пюре <span class="who a">танк</span></td><td class="n">10</td><td>10 хвостов Аскесвина, 10 мяса Вольтюра, 10 папоротников</td></tr>
+      <tr><td>Пирог с хрустящей корочкой <span class="who a">танк</span></td><td class="n">10</td><td>10 яиц Вольтюра, 20 лозоягод, 40 ячменной муки</td></tr>
+      <tr><td>Маринованная зелень <span class="who b">маг</span></td><td class="n">10</td><td>30 сока, 20 магекапов, 20 папоротников, 20 пуховок</td></tr>
+      <tr><td>Искристый грибной шейк <span class="who b">маг</span></td><td class="n">10</td><td>40 сока, 20 магекапов, 20 лозоягод, 20 пуховок</td></tr>
+      <tr class="best"><td><b>Итого сырья</b></td><td class="n"></td><td>50 хвостов Аскесвина, 80 лозоягод, 30 папоротников, 40 пуховок, 10 мяса и 10 яиц Вольтюра, 70 сока, 40 магекапов, 120 ячменной муки</td></tr>
+      <tr><td>Огнестойкое ячменное вино</td><td class="n">18</td><td>30 ячменя, 30 морошки (3 закваски по 6 бутылок)</td></tr>
+      <tr><td>Большая лечебная медовуха</td><td class="n">20</td><td>по 10 на каждого</td></tr>
+      <tr><td>Медовуха выносливости</td><td class="n">20</td><td>по 10 на каждого; магу часть заменить длительной медовухой эйтра</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ BRING ============ -->
+<section id="bring">
+  <div class="eyebrow">Перед отплытием</div>
+  <h2>Что взять с собой с первой высадки</h2>
+  <div class="cols">
+    <div>
+      <h3>Снаряжение</h3>
+      <ul class="plain">
+        <li>Броня из панциря (Туманные земли) или комплект ткача эйтра для мага.</li>
+        <li>Мистуокер, серебряные стрелы: дух против обугленных.</li>
+        <li>Фростнер или ледяные стрелы: Вольтюры, Костепасть, лавовые капли.</li>
+        <li>Посох защиты: пузырь спасает от тяжёлых ударов.</li>
+        <li>Кирка и топор из чёрного металла, мотыга, молот.</li>
+        <li>Гарпун (для Костепасти).</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Расходники</h3>
+      <ul class="plain">
+        <li>Огнестойкое ячменное вино: 9 на человека, 18 на двоих.</li>
+        <li>Большая лечебная медовуха, медовуха выносливости.</li>
+        <li>Лучшая еда Туманных земель (рыба с хлебом, мисохар-суприм, омлет).</li>
+        <li>Камень и кости для генератора щита, 2 ядра щита.</li>
+        <li>Материалы на портал и верстак, кровать.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARMOR ============ -->
+<section id="armor">
+  <div class="eyebrow">Броня</div>
+  <h2>Три сета Пепельных земель</h2>
+  <p class="lede">Броня указана на уровнях 1 → 4 (за каждое улучшение +2). Пламенный и Аск крафтятся в чёрной кузнице с ур. 3, Эмбла — на столе гальдра с ур. 2. Для 4-го уровня пламенного сета и Аска нужна кузница ур. 6.</p>
+  <div class="sets">
+    <article class="set pick">
+      <div class="eyebrow">Тяжёлый · танк и ближний бой</div>
+      <h3>Пламенный сет</h3>
+      <div class="armor">114 → 132 <small>брони за 3 части</small></div>
+      <dl>
+        <dt>Шлем</dt><dd>16 пламенного металла, 3 шкуры Аскесвина, 2 обугл. кости, 4 очищ. эйтра</dd>
+        <dt>Кираса</dt><dd>20 пламенного металла, 3 шкуры, 5 обугл. костей, 1 сердце Моргена</dd>
+        <dt>Поножи</dt><dd>20 пламенного металла, 3 шкуры, 5 обугл. костей</dd>
+        <dt>Бонус</dt><dd>+20% жаростойкости у кирасы и поножей (меньше урона от кипящей воды), −5% скорости за часть</dd>
+      </dl>
+    </article>
+    <article class="set">
+      <div class="eyebrow">Лёгкий · уклонения, лук, топоры</div>
+      <h3>Сет Аска</h3>
+      <div class="armor">84 → 102 <small>брони за 3 части</small></div>
+      <dl>
+        <dt>Каждая часть</dt><dd>15 льняной нити, 4 шкуры локса, 10 шкур Аскесвина</dd>
+        <dt>Сет-бонус</dt><dd>−20% выносливости на атаки, −10% на бег и прыжки, +10% колющего урона</dd>
+        <dt>Плюс</dt><dd>С пепельным плащом и медовухой берсерка атаки почти бесплатны по выносливости</dd>
+      </dl>
+    </article>
+    <article class="set">
+      <div class="eyebrow">Маг · посохи</div>
+      <h3>Сет Эмблы</h3>
+      <div class="armor">57 → 75 <small>брони за 3 части</small></div>
+      <dl>
+        <dt>Капюшон</dt><dd>16 льняной нити, 15 очищ. эйтра, 2 шкуры Аскесвина · +30% реген эйтра</dd>
+        <dt>Мантия</dt><dd>20 нити, 20 эйтра, 10 шкур, 5 пламенного металла · +50% реген эйтра</dd>
+        <dt>Штаны</dt><dd>20 нити, 20 эйтра, 10 шкур · +50% реген эйтра</dd>
+      </dl>
+    </article>
+  </div>
+  <h3>Плащи</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Плащ</th><th class="n">Броня</th><th>Эффект</th><th>Рецепт</th></tr></thead>
+    <tbody>
+      <tr class="best"><td><b>Пепельный плащ</b></td><td class="n">12–18</td><td>−10% выносливости на атаки, −20% на блок, сопротивление холоду</td><td>6 шкур Аскесвина, 2 сухожилия Моргена, 5 пламенного металла · кузница</td></tr>
+      <tr><td>Плащ Аскесвина</td><td class="n">1–4</td><td>«Бег по ветру», −15% выносливости на уклонение</td><td>6 шкур Аскесвина, 2 сухожилия Моргена · стол гальдра</td></tr>
+      <tr><td>Перьевой плащ</td><td class="n">1–4</td><td>Нет урона от падения, но <b>двойной урон от огня</b>; бери только с огнестойким вином</td><td>уже есть с Туманных земель</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>Совет из вики:</b> против Фейдера кольчуга из корней (сопротивление колющему ×0,5) может оказаться полезнее пламенной кирасы, потому что все его укусы и удары лапой колющие. Слабость корней к огню закрывается огнестойким вином.</div>
+</section>
+
+<!-- ============ FOOD ============ -->
+<section id="food">
+  <div class="eyebrow">Еда</div>
+  <h2>Кухня Пепельных земель</h2>
+  <p class="lede">Можно есть три разных блюда одновременно. Блюда, отмеченные «котёл 6», требуют улучшения скалками и досками.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Блюдо</th><th class="n">Здоровье</th><th class="n">Выносл.</th><th class="n">Эйтр</th><th>Рецепт</th><th>Где</th></tr></thead>
+    <tbody>
+      <tr class="best"><td><b>Пикантный пирог</b></td><td class="n">105</td><td class="n">35</td><td class="n">—</td><td>2 хвоста Аскесвина, 2 лозоягоды, 4 ячменной муки</td><td>стол + печь</td></tr>
+      <tr><td>Мясное пюре</td><td class="n">100</td><td class="n">34</td><td class="n">—</td><td>хвост Аскесвина, мясо Вольтюра, папоротник</td><td>котёл 6</td></tr>
+      <tr><td>Огненное свиное рагу</td><td class="n">95</td><td class="n">32</td><td class="n">—</td><td>хвост Аскесвина, 2 лозоягоды, пуховка</td><td>котёл 5</td></tr>
+      <tr><td>Жареное мясо Костепасти</td><td class="n">90</td><td class="n">30</td><td class="n">—</td><td>мясо Костепасти</td><td>жел. вертел</td></tr>
+      <tr class="best"><td><b>Пирог с хрустящей корочкой</b></td><td class="n">34</td><td class="n">100</td><td class="n">—</td><td>яйцо Вольтюра, 2 лозоягоды, 4 ячменной муки</td><td>стол + печь</td></tr>
+      <tr><td>Обжигающее ассорти</td><td class="n">32</td><td class="n">95</td><td class="n">—</td><td>3 йотунских пуховки, 3 лука, 3 папоротника (×3)</td><td>котёл 6</td></tr>
+      <tr><td>Острый мармелад</td><td class="n">30</td><td class="n">90</td><td class="n">—</td><td>3 лозоягоды, мёд, папоротник</td><td>котёл 5</td></tr>
+      <tr class="best"><td><b>Маринованная зелень</b></td><td class="n">32</td><td class="n">16</td><td class="n">95</td><td>3 сока, 2 магекапа, 2 папоротника, 2 пуховки</td><td>котёл 6</td></tr>
+      <tr><td>Искристый грибной шейк</td><td class="n">30</td><td class="n">15</td><td class="n">90</td><td>4 сока, 2 магекапа, 2 лозоягоды, 2 пуховки</td><td>котёл 6</td></tr>
+      <tr><td>Шипящий ягодный бульон</td><td class="n">28</td><td class="n">14</td><td class="n">85</td><td>3 сока, 2 лозоягоды, 2 папоротника</td><td>котёл 5</td></tr>
+      <tr><td>Гурманская чаша Пепельных земель</td><td class="n">75</td><td class="n">75</td><td class="n">38</td><td>3 жар. хвоста Аскесвина, 5 лозоягод, 2 обжиг. ассорти, огненная пряность</td><td>после Фейдера</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Готовые наборы из трёх блюд</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Для кого</th><th>Набор</th><th class="n">Здоровье</th><th class="n">Выносл.</th><th class="n">Эйтр</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who a">танк</span> танк</td><td>Пикантный пирог + мясное пюре + пирог с корочкой</td><td class="n">239</td><td class="n">169</td><td class="n">—</td></tr>
+      <tr><td><span class="who a">танк</span>, если не хватает выносливости</td><td>Пирог с корочкой + обжигающее ассорти + пикантный пирог</td><td class="n">171</td><td class="n">230</td><td class="n">—</td></tr>
+      <tr><td><span class="who b">маг</span></td><td>Маринованная зелень + грибной шейк + пикантный пирог</td><td class="n">167</td><td class="n">66</td><td class="n">185</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ MEADS ============ -->
+<section id="meads">
+  <div class="eyebrow">Зелья</div>
+  <h2>Медовухи и вино</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Зелье</th><th>Зачем</th><th>Важность</th></tr></thead>
+    <tbody>
+      <tr class="best"><td><b>Огнестойкое ячменное вино</b></td><td>Сопротивление огню на 10 минут. Почти весь урон Фейдера огненный, а огненные лужи бьют долго</td><td>обязательно</td></tr>
+      <tr><td>Большая лечебная медовуха</td><td>Быстро восстановить здоровье после попадания</td><td>обязательно</td></tr>
+      <tr><td>Медовуха выносливости (средняя или длительная)</td><td>Уклонения и бег от трещин</td><td>обязательно</td></tr>
+      <tr><td>Тоник Рататоска, медовуха лёгкой поступи</td><td>Мобильность: проще уходить от метеоров и стены огня</td><td>желательно</td></tr>
+      <tr><td>Медовуха берсерка</td><td>Урон бойца; в паре с силой Костяной массы и сетом Аска</td><td>для бойца</td></tr>
+      <tr><td>Длительная медовуха эйтра</td><td>Реген эйтра; вместе с силой Королевы и сетом Эмблы</td><td>для мага</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ WEAPONS ============ -->
+<section id="weapons">
+  <div class="eyebrow">Оружие</div>
+  <h2>Чем драться</h2>
+  <p class="lede">Оружие Пепельных земель улучшается самоцветами из сундуков крепостей. <b>Иолит</b> добавляет молнию (лучший урон, бьёт по цепочке), <b>нефрит</b> даёт шанс обездвижить корнями, <b>кровавый камень</b> усиливает урон ценой здоровья (только для опытных).</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Оружие</th><th>Тип</th><th>Рецепт (ур. 1)</th><th>Против Фейдера</th></tr></thead>
+    <tbody>
+      <tr><td>Топоры берсеркира</td><td>парные топоры · рубящий 140</td><td>24 пламенного металла, 15 обугл. костей, 3 шкуры Аскесвина</td><td>Лучший урон в ближнем бою, но щит с ними не взять. Вариант для танка, который уворачивается, а не блокирует</td></tr>
+      <tr><td>Нидхёгг</td><td>меч · рубящий 135</td><td>12 пламенного металла, 3 обугл. кости, 2 шкуры</td><td>Хороший выбор, если топоры не прокачаны</td></tr>
+      <tr class="best"><td><b>Пламенная булава</b></td><td>булава · дробящий</td><td>15 пламенного металла, 10 обугл. костей, 5 серы, 3 шкуры Аскесвина</td><td>Выбор танка: одноручная, идёт в паре со щитом; хорошо бьёт и лавовые капли</td></tr>
+      <tr><td>Пламенный щит</td><td>щит</td><td>8 пламенного металла, 10 пепельного дерева, 2 шкуры Аскесвина</td><td>Блок и парирование ближних атак: укуса, лапы, вращения</td></tr>
+      <tr><td>Убийца (Slayer)</td><td>двуручный топор</td><td>кузница</td><td>Высокий урон, но медленный; первый мощный удар по только что появившемуся боссу считается скрытой атакой</td></tr>
+      <tr><td>Пепельный клык</td><td>лук · колющий 82</td><td>10 пепельного дерева, 16 обугл. костей, 5 пламенного металла, 5 зубов Костепасти</td><td>Безопаснее, но дольше: Фейдер сопротивляется колющему. Буря-клык (иолит) даёт лучший урон</td></tr>
+      <tr><td>Обугленные стрелы</td><td>×20</td><td>4 обугл. кости, 2 пера, 8 пепельного дерева</td><td>Ледяные стрелы по Фейдеру ещё лучше</td></tr>
+      <tr class="best"><td><b>Посох дикой природы</b></td><td>магия природы</td><td>15 пепельного дерева, 10 папоротников, 3 небесных пера, 1 нефрит · стол гальдра</td><td>Сильнейший посох: корни держат босса, а яд он получает в полном объёме</td></tr>
+      <tr><td>Тролльстав</td><td>магия крови</td><td>15 обугл. костей, трофей тролля, 3 пламенного металла, 1 кровавый камень</td><td>Призванный тролль отвлекает Фейдера и неуязвим к огню. Им же удобно зачищать крепость снаружи</td></tr>
+      <tr><td>Посох защиты</td><td>магия крови</td><td>уже есть</td><td>Пузырь на партнёра. От трещин и дыхания он не спасёт: они бьют много раз</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn"><b>Не берите на Фейдера:</b> Мистуокер и Дирнвин (дух и огонь не проходят), копья и кинжалы (колющий урон в половину). Огненные стрелы и посох углей тоже теряют огненную часть урона.</div>
+</section>
+
+<!-- ============ STATIONS ============ -->
+<section id="stations">
+  <div class="eyebrow">Станции</div>
+  <h2>Новые постройки</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Постройка</th><th>Рецепт</th><th>Зачем</th></tr></thead>
+    <tbody>
+      <tr><td>Генератор щита</td><td>5 железа, 5 меди, 1 ядро щита</td><td>Купол 30 м от пепельного дождя и снарядов</td></tr>
+      <tr><td>Каменный портал</td><td>10 глаз грейдварфа, 30 граустена, 2 расплавл. ядра</td><td>Телепорт с рудой и металлом</td></tr>
+      <tr><td>Резак по металлу</td><td>5 чёрного мрамора, 5 пламенного металла, 5 пепельного дерева, 4 обугл. кости</td><td>Чёрная кузница ур. 4</td></tr>
+      <tr><td>Резак для самоцветов</td><td>5 пламенного металла, 8 пепельного дерева, 2 сухожилия Моргена, 1 кровавый камень</td><td>Чёрная кузница ур. 5</td></tr>
+      <tr><td>Скалки и доски</td><td>8 пепельного дерева, 6 тонкой древесины, 4 пламенного металла</td><td>Котёл ур. 6</td></tr>
+      <tr><td>Венок из перьев</td><td>8 небесных перьев, 1 трофей Аскесвина, 10 очищ. эйтра, 3 пепельного дерева</td><td>Стол гальдра ур. 4</td></tr>
+      <tr><td>Таран</td><td>10 пламенного металла, 2 ядра суртлинга, 20 пепельного дерева</td><td>Ломает стены крепостей; топливо — любая древесина, до 25</td></tr>
+      <tr><td>Катапульта</td><td>10 пламенного металла, 1 обугл. шестерня (со Скагга), 20 пепельного дерева</td><td>Стреляет через стены граустеновыми или взрывными снарядами</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ ENEMIES ============ -->
+<section id="enemies">
+  <div class="eyebrow">Бестиарий</div>
+  <h2>Враги и их слабости</h2>
+  <p class="lede">Философия биома: выбирайте бои сами, от многих стычек проще убежать. Многие враги бьют своих, это можно использовать.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Враг</th><th class="n">HP</th><th>Слабость</th><th>Сопротивление / иммунитет</th><th>Как бить</th></tr></thead>
+    <tbody>
+      <tr><td>Обугленный воин</td><td class="n">600</td><td><span class="tag weak">дух</span></td><td><span class="tag res">колющий ½</span><span class="tag res">огонь ¼</span><span class="tag imm">яд</span></td><td>Парировать двуручник и контратаковать</td></tr>
+      <tr><td>Обугленный стрелок</td><td class="n">200</td><td><span class="tag weak">дух</span></td><td><span class="tag res">колющий ½</span><span class="tag res">огонь ¼</span><span class="tag imm">яд</span></td><td>Догнать и добить мечом</td></tr>
+      <tr><td>Обугленный чернокнижник</td><td class="n">600</td><td><span class="tag weak">дух</span></td><td><span class="tag res">колющий, лёд ½</span><span class="tag imm">яд</span></td><td>Убивать первым: призывает твитчеров, которые остаются после его смерти</td></tr>
+      <tr><td>Обугленный твитчер</td><td class="n">220</td><td><span class="tag weak">дух</span></td><td><span class="tag res">колющий ½</span><span class="tag imm">яд</span></td><td>Ходят группами, ближний бой</td></tr>
+      <tr><td>Морген</td><td class="n">1600</td><td><span class="tag weak">молния</span></td><td><span class="tag res">дробящий, рубящий, колющий, огонь ½</span></td><td>Самый опасный рядовой враг. Иолит, Дундр, Буря-клык; держать дистанцию</td></tr>
+      <tr><td>Падшая валькирия</td><td class="n">1500</td><td><span class="tag weak">дух</span></td><td><span class="tag res">огонь ½</span><span class="tag imm">яд</span></td><td>Стрелять из лука; дропает небесные перья</td></tr>
+      <tr><td>Аскесвин</td><td class="n">800</td><td>—</td><td><span class="tag res">огонь, яд ½</span><span class="tag imm">дух</span></td><td>Прыжок бьёт и своих; приручается</td></tr>
+      <tr><td>Вольтюр</td><td class="n">200</td><td><span class="tag weak">лёд</span></td><td><span class="tag imm">яд</span></td><td>Одна-две стрелы</td></tr>
+      <tr><td>Лавовая капля</td><td class="n">300</td><td><span class="tag weak">дробящий</span><span class="tag weak">лёд</span><span class="tag weak">молния</span></td><td><span class="tag imm">огонь</span></td><td>Только издалека: взрывается и поджигает</td></tr>
+      <tr><td>Костепасть</td><td class="n">1100</td><td><span class="tag weak">лёд</span></td><td><span class="tag imm">огонь</span><span class="tag imm">дух</span></td><td>Лук с берега или гарпун; зубы нужны на Пепельный клык</td></tr>
+      <tr><td>Скагг (турель)</td><td class="n">400</td><td>—</td><td><span class="tag res">колющий, огонь, молния ½</span></td><td>Подойти и разбить булавой; дропает шестерни</td></tr>
+      <tr><td>Лорд Рето (мини-босс)</td><td class="n">—</td><td><span class="tag weak">дух</span></td><td><span class="tag res">колющий, огонь, лёд ½</span></td><td>Всегда 2 звезды, финты ловят перекат. Отбегать из зоны удара; маг держит его стеной корней</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ FORTRESS ============ -->
+<section id="fortress">
+  <div class="eyebrow">Крепости</div>
+  <h2>Как брать обугленную крепость</h2>
+  <div class="cols">
+    <div>
+      <h3>Устройство</h3>
+      <ul class="plain">
+        <li>Видна издалека по зелёному лучу в небо, стоит вглубь от берега среди лавы.</li>
+        <li>Внешняя стена из 3 слоёв по 1500 HP: пробить её проще, чем ворота (6000 HP).</li>
+        <li>Охрана: до 3 чернокнижников, до 5 стрелков, до 4 скаггов по углам. Сами они не возрождаются.</li>
+        <li>Во дворе два <b>идола злобы</b> бесконечно призывают врагов, сломайте их в первую очередь.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Добыча из центральной башни</h3>
+      <ul class="plain">
+        <li><b>Алтарь колокола</b>: 2–4 фрагмента. У него всего 10 HP, бейте аккуратно.</li>
+        <li><b>Обугленные сундуки</b>: иолит, кровавый камень, нефрит. Сундуки можно случайно разрушить тараном, не ломайте стену башни вплотную к ним.</li>
+        <li><b>Вегвизир</b> к арене Фейдера (шанс 50%), 2 расплавленных ядра.</li>
+        <li>78 полос бронзовых шипов, в среднем 273 бронзового лома с одной крепости.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>Трюк вдвоём:</b> маг вызывает тролля Тролльставом прямо у стены, тролль зачищает двор, пока танк ломает стену тараном. Потом тролля нужно убить: к игрокам он тоже враждебен.</div>
+</section>
+
+<!-- ============ FADER ============ -->
+<section id="fader">
+  <div class="eyebrow" style="color:var(--flame)">Босс</div>
+  <h2>Фейдер, Изумрудное пламя</h2>
+  <p class="lede">Скелет дракона с зелёным огнём, 25 000 здоровья. Чем меньше у него здоровья, тем чаще он использует дальние атаки.</p>
+  <div class="res-strip">
+    <span class="tag">дробящий ×1</span><span class="tag">рубящий ×1</span><span class="tag">лёд ×1</span><span class="tag">молния ×1</span><span class="tag">яд ×1</span>
+    <span class="tag res">колющий ½</span>
+    <span class="tag imm">огонь</span><span class="tag imm">дух</span>
+  </div>
+
+  <h3>Атаки и как от них уходить</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Атака</th><th>Урон</th><th>Когда</th><th>Что делать</th></tr></thead>
+    <tbody>
+      <tr class="best"><td><b>Трещина</b></td><td>шипы + лужа: 120 огня, 80 духа</td><td>35–85% HP раз в 30 с, ниже 35% раз в 20 с</td><td>Самая смертельная: убивает даже в полном пламенном сете с вином за секунды. Нельзя заблокировать. Бегите по прямой, изредка спринт: огоньки идут за вами чуть быстрее шага</td></tr>
+      <tr><td>Укус</td><td>210 колющего</td><td>каждые 3 с вблизи</td><td>Перекат в сторону или парирование</td></tr>
+      <tr><td>Удар лапой</td><td>200 колющего</td><td>вблизи</td><td>Перекат; бить 2–3 раза между атаками</td></tr>
+      <tr><td>Вращение</td><td>140 колющего, радиус 8,5 м</td><td>раз в 20 с</td><td>Отойти или перекат</td></tr>
+      <tr><td>Огненное дыхание</td><td>60 огня + горящая полоса</td><td>5–85% HP, раз в 25 с</td><td>Шагать перпендикулярно. Прямо под подбородком дыхание не достаёт, можно успеть полную серию ударов</td></tr>
+      <tr><td>Метеоры</td><td>40 дробящего + 120 огня, лужи</td><td>раз в 25 с, ниже 25% раз в 18 с</td><td>Смотреть вверх и уходить от точек падения</td></tr>
+      <tr><td>Рёв</td><td>призывает до 7 воинов и 7 стрелков (по 50 HP)</td><td>ниже 55% HP</td><td>Один выстрел или удар на каждого; заманивать их под огонь босса</td></tr>
+      <tr><td>Стена огня</td><td>80 огня, 80 духа</td><td>15–90% HP, раз в 60 с</td><td>Кольцо появляется вокруг вас: продолжайте двигаться, перепрыгните или выйдите через разрыв, где оно началось</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Роли для пары</h3>
+  <div class="roles">
+    <div class="role">
+      <div><span class="who a">танк</span></div>
+      <ul>
+        <li>Пламенный сет и пепельный плащ (−20% выносливости на блок).</li>
+        <li>Пламенная булава и пламенный щит; Пепельный клык против призванных обугленных.</li>
+        <li>Держит Фейдера мордой к себе и в стороне от мага, блокирует или парирует ближние атаки, бьёт в окна.</li>
+        <li>Сила Костяной массы плюс медовуха берсерка.</li>
+        <li>Еда: пикантный пирог, мясное пюре, пирог с корочкой.</li>
+      </ul>
+    </div>
+    <div class="role">
+      <div><span class="who b">маг</span></div>
+      <ul>
+        <li>Сет Эмблы, длительная медовуха эйтра, сила Королевы, бонус «Отдых».</li>
+        <li>Посох дикой природы: корни держат Фейдера, а яд проходит по нему в полную силу.</li>
+        <li>Тролльстав: перевызывать троллей, чтобы босс отвлекался.</li>
+        <li>Посох защиты на бойца перед ближними сериями.</li>
+        <li>Кружит на дистанции, убирает призванных обугленных.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note green"><b>Если оба бойцы:</b> разойдитесь, чтобы трещина и стена огня гнались только за одним, пока второй бьёт. Один держит босса, второй убивает призванных. В коопе урон врагов растёт примерно на 4% за каждого лишнего игрока рядом.</div>
+
+  <h3>Чек-лист перед призывом</h3>
+  <ul class="check">
+    <li><input type="checkbox" id="f-1"><label for="f-1">Отдых активен, три блюда съедены полностью</label></li>
+    <li><input type="checkbox" id="f-2"><label for="f-2">Огнестойкое вино выпито, ещё 2–3 бутылки в инвентаре (действует 10 минут)</label></li>
+    <li><input type="checkbox" id="f-3"><label for="f-3">Лечебные медовухи и медовухи выносливости на панели быстрого доступа</label></li>
+    <li><input type="checkbox" id="f-4"><label for="f-4">Активирована сила Костяной массы или Королевы</label></li>
+    <li><input type="checkbox" id="f-5"><label for="f-5">Оружие отремонтировано, есть запасное (лук для призванных)</label></li>
+    <li><input type="checkbox" id="f-6"><label for="f-6">Вокруг арены нет Моргенов и обугленных, кровать и портал рядом</label></li>
+  </ul>
+</section>
+
+<!-- ============ AFTER ============ -->
+<section id="after">
+  <div class="eyebrow">Награда</div>
+  <h2>Что даёт победа</h2>
+  <ul class="plain">
+    <li><b>Трофей Фейдера</b> на камень в Начале даёт силу на 300 секунд: сопротивление огню, +100% к набору адреналина, на 50% медленнее заполняется шкала оглушения.</li>
+    <li><b>5 реликвий Фейдера</b>: материал для следующего этапа игры.</li>
+    <li>Болотная ведьма начинает продавать <b>огненную пряность</b> за 200 монет. Из неё готовится гурманская чаша Пепельных земель (75/75/38 на 50 минут).</li>
+    <li>Отключаются набеги «Армия нежити идёт» и «Мёртвые призваны». Зато по ночам в старых биомах начинают появляться обугленные воины и стрелки (без звёзд).</li>
+  </ul>
+</section>
+
+<footer id="sources">
+  <div class="eyebrow">Источники</div>
+  <p>Цифры, рецепты и сопротивления взяты из вики Valheim; советы по тактике сведены из вики и гайдов. Если после патча что-то не совпадает с игрой, верьте игре.</p>
+  <ul>
+    <li><a href="https://valheim.fandom.com/wiki/Fader" target="_blank" rel="noopener">Valheim Wiki: Fader</a></li>
+    <li><a href="https://valheim.fandom.com/wiki/Boss_strategies" target="_blank" rel="noopener">Valheim Wiki: Boss strategies</a></li>
+    <li><a href="https://valheim.fandom.com/wiki/Ashlands" target="_blank" rel="noopener">Valheim Wiki: Ashlands</a></li>
+    <li><a href="https://valheim.fandom.com/wiki/Armor" target="_blank" rel="noopener">Valheim Wiki: Armor</a> · <a href="https://valheim.fandom.com/wiki/Food" target="_blank" rel="noopener">Food</a> · <a href="https://valheim.fandom.com/wiki/Charred_Fortress" target="_blank" rel="noopener">Charred Fortress</a></li>
+    <li><a href="https://www.bisecthosting.com/blog/valheim-fader-boss-guide-location-summon-tips-loot-rewards" target="_blank" rel="noopener">BisectHosting: Fader boss guide</a></li>
+    <li><a href="https://vgtimes.ru/guides/107634-gayd-po-obnovleniyu-ashlands-pepelnye-zemli-dlya-valheim.html" target="_blank" rel="noopener">VGTimes: гайд по Пепельным землям</a></li>
+    <li><a href="https://xgamingserver.com/blog/valheim-ashlands-guide/" target="_blank" rel="noopener">XGamingServer: Ashlands guide</a></li>
+  </ul>
+  <p>Русские названия предметов могут немного отличаться от официальной локализации игры.</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var KEY='ashlands-plan-v1';
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
+  var boxes=[].slice.call(document.querySelectorAll('ul.check input[type=checkbox]'));
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function update(){
+    document.querySelectorAll('[data-phase]').forEach(function(ph){
+      var b=ph.querySelectorAll('input[type=checkbox]'),d=0;
+      b.forEach(function(x){if(x.checked)d++;});
+      var p=ph.querySelector('.progress');
+      p.textContent=d+' / '+b.length;
+      p.classList.toggle('done',d===b.length);
+    });
+    var done=boxes.filter(function(x){return x.checked;}).length;
+    document.getElementById('total').textContent='Выполнено: '+done+' из '+boxes.length;
+  }
+  boxes.forEach(function(b){
+    if(state[b.id])b.checked=true;
+    b.addEventListener('change',function(){state[b.id]=b.checked;save();update();});
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    boxes.forEach(function(b){b.checked=false;});state={};save();update();
+  });
+  update();
+})();
+</script>
+</body>
+</html>
